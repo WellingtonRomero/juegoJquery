@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.js"></script>
+</head>
+<body>
+	<h2>Colocar Piezas</h2>
+
+	<p>Se debe colocar todas la figuras del lado izquierdo en cada una de las posiciones del lado derecho.
+	Cada figura de la izquierda colocada en su posición correcta tomará el color de los bordes de la figura del lado derecho. Al completar todas las figuras ganaras el juego.</p>
+
+<div class="flex-content">
+	<div class="flex-content-left">
+		<div class="figuras1" id="cuadrado"></div>
+		<div class="figuras1" id="circulo"></div>
+		<div class="figuras1" id="angulo"></div>
+		<div class="figuras1" id="forma"></div>
+	</div>
+	<div class="flex-content-rigth">
+		<div class="figuras2" id="anguloLineas"></div>
+		<div class="figuras2" id="formaLineas"></div>
+		<div class="figuras2" id="cuadradoLineas"></div>
+		<div class="figuras2" id="circuloLineas"></div>
+	</div>
+</div>
+
+<audio id="sonidoGanar">
+	<source src="audio/soundVictoria.wav">
+</audio>
+
+<audio id="sound">
+	<source src="audio/sound.wav">
+</audio>
+
+
+<script>
+ contador = 0;
+
+	$(document).ready(function(){
+
+		$("#cuadrado").draggable({ revert: 'invalid'});
+		$("#circulo").draggable({ revert: 'invalid' });
+		$("#angulo").draggable({ revert: 'invalid' });
+		$("#forma").draggable({ revert: 'invalid' });
+
+		$("#cuadradoLineas").droppable({
+			accept:"#cuadrado",tolerance:"fit",
+			drop:function(indice,elementos){
+				$("#cuadrado").hide();
+				$(this).css("background-color","yellow");
+				$(this).css("border","20px solid");
+				$(this).css("border-color","yellow");
+				contador++;
+				ganar(contador);
+				
+				
+			}
+			
+		});
+
+		$("#circuloLineas").droppable({
+			accept:"#circulo",tolerance:"fit",
+			drop:function(indice,elementos){
+				$("#circulo").hide();
+				$(this).css("background-color","red");
+				$(this).css("border","15px solid");
+				$(this).css("border-color","red");
+				contador++;
+				ganar(contador);
+		
+			}
+			
+		});
+
+		$("#anguloLineas").droppable({
+			accept:"#angulo",tolerance:"fit",
+			drop:function(indice,elementos){
+				$("#angulo").hide();
+				$(this).css("background-color","blue");
+				$(this).css("border","20px solid");
+				$(this).css("border-color","blue");
+				contador++;
+				ganar(contador);
+			}
+		});
+
+		$("#formaLineas").droppable({
+			accept:"#forma",tolerance:"fit",
+			drop:function(indice,elementos){
+				$("#forma").hide();
+				$(this).css("background-color","green");
+				$(this).css("border","20px solid");
+				$(this).css("border-color","green");
+				contador++;
+				ganar(contador);
+			}
+			
+		});
+
+	var sonido = document.getElementById('sonidoGanar');
+	var sound = document.getElementById('sound');
+
+		function ganar(cont){
+			if(cont === 4){
+				$("p").text("Enhorabuena!!!");
+				sonido.play();
+
+				 $("p").append("<a href=><button>Reiniciar</button></a>");
+			}else {
+				sound.play();
+			}
+		}
+
+	});
+
+</script>
+</body>
+</html>
